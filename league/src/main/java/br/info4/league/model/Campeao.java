@@ -1,10 +1,14 @@
 package br.info4.league.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -12,6 +16,8 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "campeao")
 
 public class Campeao {
+
+   
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,9 +48,12 @@ public class Campeao {
     @Column(name = "historia_campeao", nullable = false, length = 2048, unique = false)
     private String historiaCampeao;
 
-    public Campeao(Long idCampeao, @NotBlank String nomeCampeao, @NotBlank String funcaoCampeao,
+    @OneToMany(mappedBy = "campeao", cascade = CascadeType.ALL)
+    private List<Habilidade> listaHabilidade;
+
+     public Campeao(Long idCampeao, @NotBlank String nomeCampeao, @NotBlank String funcaoCampeao,
             @NotBlank String epitetoCampeao, @NotBlank String dificuldadeCampeao, @NotBlank String urlImagemCampeao,
-            @NotBlank String historiaCampeao) {
+            @NotBlank String historiaCampeao, List<Habilidade> listaHabilidade) {
         this.idCampeao = idCampeao;
         this.nomeCampeao = nomeCampeao;
         this.funcaoCampeao = funcaoCampeao;
@@ -52,6 +61,7 @@ public class Campeao {
         this.dificuldadeCampeao = dificuldadeCampeao;
         this.urlImagemCampeao = urlImagemCampeao;
         this.historiaCampeao = historiaCampeao;
+        this.listaHabilidade = listaHabilidade;
     }
 
     public Campeao() {
@@ -136,5 +146,13 @@ public class Campeao {
         } else if (!idCampeao.equals(other.idCampeao))
             return false;
         return true;
+    }
+
+    public List<Habilidade> getListaHabilidade() {
+        return listaHabilidade;
+    }
+
+    public void setListaHabilidade(List<Habilidade> listaHabilidade) {
+        this.listaHabilidade = listaHabilidade;
     }
 }

@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "habilidade")
 
@@ -31,6 +33,8 @@ public class Habilidade {
     @NotBlank
     @Column(name = "descricao_habilidade", nullable = false, length = 255, unique = false)
     private String descricaoHabilidade;
+
+    @JsonIgnore
 
     @ManyToOne
     @JoinColumn(name = "id_campeao")
